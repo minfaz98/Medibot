@@ -1,0 +1,11 @@
+Monday: Dr. Kumar, Dr. Rani
+Tuesday: Dr. Zaid, Dr. Noor
+Wednesday: Dr. Rahman, Dr. Shyam
+Thursday: Dr. Priya, Dr. Imran
+Friday: Dr. Farah, Dr. Amin
+Saturday: Dr. Kumar, Dr. Noor
+Sunday: Dr. Shyam, Dr. Zaid
+Holiday: No doctors available
+Festival: Emergency doctors only
+
+

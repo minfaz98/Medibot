@@ -1,0 +1,10 @@
+Dr. Kumar - General Physician
+Dr. Rani - Pediatrician
+Dr. Zaid - Cardiologist
+Dr. Noor - Neurologist
+Dr. Rahman - Dermatologist
+Dr. Shyam - Orthopedic
+Dr. Priya - Gynecologist
+Dr. Imran - ENT Specialist
+Dr. Farah - Psychiatrist
+Dr. Amin - Dentist
