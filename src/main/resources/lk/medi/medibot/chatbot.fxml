@@ -3,6 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -16,62 +19,65 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="651.0" prefWidth="865.0" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.medi.medibot.HelloController">
+<VBox prefHeight="700.0" prefWidth="900.0" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.medi.medibot.HelloController">
 
-    <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-    </padding>
-   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SofiBot – The Chatty Nurse" textAlignment="CENTER" translateX="200.0">
+   <padding>
+      <Insets bottom="10" left="10" right="10" top="10" />
+   </padding>
+
+   <!-- Title -->
+   <Text text="SofiBot – The Chatty Nurse" translateX="200">
       <font>
          <Font name="Eras Bold ITC" size="27.0" />
       </font>
       <fill>
-         <RadialGradient centerX="0.15044249475529764" centerY="0.5" radius="0.5">
+         <RadialGradient centerX="0.3800884871356255" centerY="0.5" radius="0.5">
             <stops>
                <Stop>
                   <color>
-                     <Color />
-                  </color>
-               </Stop>
+                     <Color red="0.22623413801193237" green="0.1525000035762787" blue="0.6100000143051147" />
+                  </color></Stop>
+               <Stop offset="0.15609756097560976">
+                  <color>
+                     <Color red="0.22112500667572021" green="0.1525000035762787" blue="0.6100000143051147" />
+                  </color></Stop>
                <Stop offset="1.0">
                   <color>
-                     <Color red="0.08350877463817596" green="0.5368421077728271" blue="0.2270643264055252" />
+                     <Color red="0.08235294371843338" green="0.5372549295425415" blue="0.22745098173618317" />
                   </color>
                </Stop>
             </stops>
          </RadialGradient>
       </fill>
    </Text>
-   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="&quot;Here for your health, anytime!&quot;" translateX="250.0" translateY="-15.0">
+
+   <!-- Subtitle -->
+   <Text text="&quot;Here for your health, anytime!&quot;" translateX="250" translateY="-15">
       <font>
-         <Font name="System Bold Italic" size="18.0" />
+         <Font name="System Bold Italic" size="18" />
       </font>
       <fill>
-         <LinearGradient endX="1.0" endY="1.0" startY="0.53409092354052">
+         <LinearGradient endX="1.0" endY="1.0" startY="0.5">
             <stops>
-               <Stop>
-                  <color>
-                     <Color red="0.07480701804161072" green="0.05270955339074135" blue="0.27368420362472534" />
-                  </color>
-               </Stop>
-               <Stop offset="1.0">
-                  <color>
-                     <Color red="0.08701754361391068" green="0.378947377204895" blue="0.16486549377441406" />
-                  </color>
-               </Stop>
+               <Stop color="#130d46" offset="0.0" />
+               <Stop color="#166031" offset="1.0" />
             </stops>
          </LinearGradient>
       </fill>
    </Text>
+   <ImageView fx:id="chatBotImageView" fitHeight="200.0" fitWidth="250.0" preserveRatio="true" translateX="275.0">
+      <image>
+         <Image url="@../../../images/smile.png" />
+      </image>
+   </ImageView>
 
-    <TextArea fx:id="chatArea" editable="false" prefHeight="326.0" prefWidth="845.0" translateY="-15.0" wrapText="true" />
+   <!-- Chat Area -->
+   <TextArea fx:id="chatArea" editable="false" minHeight="-Infinity" prefHeight="200.0" prefWidth="882.0" translateY="-10" wrapText="true" />
 
-    <HBox spacing="10">
-        <TextField fx:id="userInput" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="26.0" prefWidth="719.0" HBox.hgrow="ALWAYS">
-         <cursor>
-            <Cursor fx:constant="S_RESIZE" />
-         </cursor></TextField>
-        <Button onAction="#handleSend" prefHeight="26.0" prefWidth="177.0" style="-fx-background-color: green; -fx-border-radius: 20px;" text="Send" textAlignment="CENTER">
+   <!-- Input Box -->
+   <HBox spacing="10">
+      <TextField fx:id="userInput" prefHeight="26.0" prefWidth="700.0" HBox.hgrow="ALWAYS" />
+      <Button fx:id="sendButton" onAction="#handleSend" prefHeight="26.0" prefWidth="160.0" style="-fx-background-color: green; -fx-border-radius: 20px;" text="Send">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
@@ -80,63 +86,69 @@
                <stops>
                   <Stop>
                      <color>
-                        <Color />
-                     </color>
-                  </Stop>
+                        <Color red="0.12631578743457794" green="0.05239766091108322" blue="0.05239766091108322" />
+                     </color></Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color red="0.13333334028720856" green="0.20000000298023224" blue="0.13333334028720856" />
-                     </color>
-                  </Stop>
+                        <Color />
+                     </color></Stop>
                </stops>
             </LinearGradient>
          </textFill>
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></Button>
-    </HBox>
-   <VBox prefHeight="185.0" prefWidth="782.0">
-      <children>
-         <ImageView fx:id="chatBotImageView" fitHeight="216.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" translateX="250.0">
-            <image>
-               <Image url="@../../../images/smile.png" />
-            </image>
-            <cursor>
-               <Cursor fx:constant="NONE" />
-            </cursor>
-         </ImageView>
-      </children>
-   </VBox>
-</VBox>
-<VBox fx:id="appointmentPane" spacing="5" visible="false">
-<Label text="Book Appointment"/>
-<HBox spacing="5">
-   <Label text="Doctor:"/>
-   <ComboBox fx:id="doctorDropdown" promptText="Select Doctor"/>
-</HBox>
-<HBox spacing="5">
-   <Label text="Name:"/>
-   <TextField fx:id="nameField"/>
-</HBox>
-<HBox spacing="5">
-   <Label text="Phone:"/>
-   <TextField fx:id="phoneField"/>
-</HBox>
-<HBox spacing="10">
-   <Button text="Book Appointment" onAction="#handleBookAppointment"/>
-   <Button text="Cancel" onAction="#hideAppointmentPane"/>
-</HBox>
-</VBox>
+         </cursor>
+      </Button>
+   </HBox>
 
-<VBox fx:id="cancelPane" spacing="5" visible="false">
-<Label text="Cancel Appointment"/>
-<HBox spacing="5">
-   <Label text="Appointment ID:"/>
-   <TextField fx:id="cancelIdField"/>
-</HBox>
-<HBox spacing="10">
-   <Button text="Cancel Appointment" onAction="#handleCancelAppointment"/>
-   <Button text="Close" onAction="#hideCancelPane"/>
-</HBox>
-</VBox>
+   <!-- Chatbot Image -->
+   <HBox alignment="CENTER" spacing="50">
 
+      <!-- Appointment Pane -->
+      <VBox fx:id="appointmentPane" spacing="10" visible="false">
+         <Label text="Book Appointment" />
+
+         <HBox spacing="5">
+            <Label text="Doctor:" />
+            <ComboBox fx:id="doctorDropdown" promptText="Select Doctor" />
+         </HBox>
+
+         <HBox spacing="5">
+            <Label text="Name:" />
+            <TextField fx:id="nameField" />
+         </HBox>
+
+         <HBox spacing="5">
+            <Label text="Phone:" />
+            <TextField fx:id="phoneField" />
+         </HBox>
+
+         <HBox spacing="5">
+            <Label text="Date:" />
+            <DatePicker fx:id="datePicker" />
+         </HBox>
+
+         <HBox spacing="10">
+            <Button onAction="#handleBookAppointment" text="Book Appointment" />
+            <Button onAction="#hideAppointmentPane" text="Cancel" />
+         </HBox>
+      </VBox>
+
+      <!-- Cancel Pane -->
+      <VBox fx:id="cancelPane" spacing="10" visible="false">
+         <Label text="Cancel Appointment" />
+
+         <HBox spacing="5">
+            <Label text="Appointment ID:" />
+            <TextField fx:id="cancelIdField" />
+         </HBox>
+
+         <HBox spacing="10">
+            <Button onAction="#handleCancelAppointment" text="Cancel Appointment" />
+            <Button onAction="#hideCancelPane" text="Close" />
+         </HBox>
+      </VBox>
+
+   </HBox>
+
+</VBox>

@@ -1,4 +1,4 @@
-what is your name=I am MediBot, your hospital assistant.
+what is your name=I am sofi, your hospital assistant.
 who created you=I was created by a passionate Java developer.
 how can I book appointment=Just say "book appointment".
 how to cancel appointment=Say "cancel appointment" and I will help you.
