@@ -1,0 +1,11 @@
+Ali=Dr. Kumar,2025-05-03,10:00AM
+Sara=Dr. Rani,2025-05-04,11:30AM
+John=Dr. Zaid,2025-05-03,02:00PM
+Emma=Dr. Noor,2025-05-05,09:30AM
+David=Dr. Rahman,2025-05-06,03:00PM
+Lina=Dr. Shyam,2025-05-03,01:30PM
+Amal=Dr. Priya,2025-05-07,11:00AM
+Zara=Dr. Imran,2025-05-05,12:30PM
+Mira=Dr. Zaid,2025-05-06,04:00PM
+Ravi=Dr. Kumar,2025-05-08,10:30AM
+book appointment

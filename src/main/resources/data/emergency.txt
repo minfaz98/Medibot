@@ -1,0 +1,10 @@
+Emergency Helpline: 1990
+Nearest Hospital: City HealthCare Center, Main Road
+Ambulance: 011-2233445
+Police: 119
+Fire Department: 110
+Blood Bank: 011-2255667
+Poison Control: 011-2288996
+Child Helpline: 1929
+Mental Health Support: 011-9999888
+Emergency Email: emergency@hospital.com
