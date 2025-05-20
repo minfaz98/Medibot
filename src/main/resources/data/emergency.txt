@@ -1,3 +1,4 @@
+emergency contact information for a hospital
 Emergency Helpline: 1990
 Nearest Hospital: City HealthCare Center, Main Road
 Ambulance: 011-2233445
@@ -8,3 +9,8 @@ Poison Control: 011-2288996
 Child Helpline: 1929
 Mental Health Support: 011-9999888
 Emergency Email: emergency@hospital.com
+Emergency SMS: 911
+Emergency Fax: 011-2233446
+Emergency Website: www.hospital.com/emergency
+
+

@@ -14,6 +14,7 @@ import lk.medi.medibot.service.AppointmentService;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
@@ -30,6 +31,9 @@ public class HelloController implements Initializable {
     @FXML private TextField cancelIdField;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private Button bookButton;
+
 
 
     private BotLogic botLogic;
@@ -42,11 +46,14 @@ public class HelloController implements Initializable {
         chatArea.appendText("MediBot: " + botLogic.welcomeMessage() + "\n");
         loadDoctorDropdown();
         userInput.setOnAction(event -> handleSend());
+        cancelIdField.setOnAction(event -> handleCancelAppointment());
+        bookButton.setOnAction(event -> handleBookAppointment());
+
     }
 
     private void setupChatbotImage() {
-        Image defaultImage = new Image(getClass().getResource("/images/smile.png").toExternalForm());
-        Image hoverImage = new Image(getClass().getResource("/images/hi.png").toExternalForm());
+        Image defaultImage = new Image(Objects.requireNonNull(getClass().getResource("/images/smile.png")).toExternalForm());
+        Image hoverImage = new Image(Objects.requireNonNull(getClass().getResource("/images/hi.png")).toExternalForm());
 
         chatBotImageView.setImage(defaultImage);
         chatBotImageView.setOnMouseEntered(e -> chatBotImageView.setImage(hoverImage));
@@ -69,10 +76,10 @@ public class HelloController implements Initializable {
         if (botLogic.isTrainingMode()) {
             response = botLogic.trainBot(input);
         } else {
-            if (input.toLowerCase().contains("book appointment")) {
+            if (input.toLowerCase().contains("book appointment")|| input.toLowerCase().contains("make appointment") || input.toLowerCase().contains("schedule appointment")) {
                 Platform.runLater(() -> appointmentPane.setVisible(true));
                 response = "Sure! Please fill the form below to book an appointment.";
-            } else if (input.toLowerCase().contains("cancel appointment")) {
+            } else if (input.toLowerCase().contains("cancel appointment")|| input.toLowerCase().contains("delete appointment") || input.toLowerCase().contains("remove appointment")) {
                 Platform.runLater(() -> cancelPane.setVisible(true));
                 response = "Please enter your appointment ID to cancel.";
             } else {
@@ -93,7 +100,6 @@ public class HelloController implements Initializable {
                     doctorDropdown.getItems().addAll(doctors);
                 });
             } catch (Exception e) {
-                e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Error", "Failed to load doctor list.");
             }
         }).start();
@@ -108,32 +114,34 @@ public class HelloController implements Initializable {
 
         if (doctor == null || name.isEmpty() || phone.isEmpty() || date == null) {
             showAlert(Alert.AlertType.WARNING, "Missing Information", "Please fill in all fields.");
-            chatArea.appendText("Sofi: " + "Missing Information Please fill in all fields." + "\n");
+            chatArea.appendText("Sofi: Please fill in all fields.\n");
             return;
-
-
         }
-
 
         new Thread(() -> {
             try {
                 String id = appointmentService.bookAppointment(name, phone, doctor, date);
-                if(id== null) {
+
+                // Check if booking was successful by checking if ID is numeric
+                if (id != null && id.matches("\\d+")) {
                     Platform.runLater(() -> {
                         chatArea.appendText("Sofi: Appointment booked successfully!\n");
                         chatArea.appendText("Doctor: " + doctor + "\nPatient: " + name + " | Phone: " + phone + "\n");
-                        chatArea.appendText("Appointment ID: " + id + "\n" );
-                        chatArea.appendText("Please come after 3pm on " +  date  + " to consult the doctor.\n");
+                        chatArea.appendText("Appointment ID: " + id + "\n");
+                        chatArea.appendText("Please come after 3pm on " + date + " to consult the doctor.\n");
                         hideAppointmentPane();
                     });
                 } else {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to book appointment.");
-                    chatArea.appendText("Sofi: " + "Failed to book appointment." + "\n");
+                    Platform.runLater(() -> {
+                        showAlert(Alert.AlertType.ERROR, "Booking Failed", id);
+                        chatArea.appendText("Sofi: " + id + "\n");
+                    });
                 }
-
             } catch (Exception e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Error", "Booking failed.");
+                Platform.runLater(() -> {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Booking failed.");
+                    chatArea.appendText("Sofi: Booking failed.\n");
+                });
             }
         }).start();
     }
@@ -143,7 +151,7 @@ public class HelloController implements Initializable {
         String appointmentId = cancelIdField.getText().trim();
         if (appointmentId.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Missing ID", "Please enter your Appointment ID.");
-            chatArea.appendText("Sofi: " + "Please enter your Appointment ID." + "\n");
+            chatArea.appendText("Sofi: " + "Missing ID-Please enter your Appointment ID." + "\n");
             return;
         }
 
@@ -154,7 +162,7 @@ public class HelloController implements Initializable {
                 Platform.runLater(() -> {
                     chatArea.appendText("Sofi:"+  responseMessage + "\n");
                     if(responseMessage.equals("Appointment cancelled successfully.")) {
-                        chatArea.appendText("Your appointment has been cancelled.\n");
+                        chatArea.appendText("Your appointment "+ appointmentId + " has been cancelled.\n");
                         hideCancelPane();
                     } else {
                         chatArea.appendText("Failed to cancel the appointment. Please check the ID.\n");
@@ -162,7 +170,6 @@ public class HelloController implements Initializable {
 
                 });
             } catch (Exception e) {
-                e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Error", "Cancelation failed.");
             }
         }).start();

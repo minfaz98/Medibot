@@ -1,3 +1,4 @@
+here is list of doctors with their specialties.
 Dr. Kumar - General Physician
 Dr. Rani - Pediatrician
 Dr. Zaid - Cardiologist
@@ -8,3 +9,5 @@ Dr. Priya - Gynecologist
 Dr. Imran - ENT Specialist
 Dr. Farah - Psychiatrist
 Dr. Amin - Dentist
+
+
