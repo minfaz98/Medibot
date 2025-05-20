@@ -129,7 +129,7 @@
          </HBox>
 
          <HBox spacing="10">
-            <Button onAction="#handleBookAppointment" text="Book Appointment" />
+            <Button fx:id="bookButton" onAction="#handleBookAppointment" text="Book Appointment" defaultButton="true"/>
             <Button onAction="#hideAppointmentPane" text="Cancel" />
          </HBox>
       </VBox>

@@ -9,80 +9,60 @@ import java.util.*;
 
 public class BotLogic {
     private final Map<String, String> learnedResponses = new HashMap<>();
-    private final Map<String, Integer> repeatedQuestions = new HashMap<>();
     private final Map<String, String> qnaMap = new HashMap<>();
-    private String lastQuestion = "";
-    private int repeatCount = 0;
-    private String userName = "";
-    private boolean trainingMode = false;
-    private String questionToLearn = "";
-    private boolean awaitingNameInput = false;
-    private final String LEARNED_FILE = "learned_data.txt";
+    private final Map<String, String> smallTalkMap = new HashMap<>();
 
-    private ImageView chatBotImageView;
-    private final Image goodbyeImage = new Image(getClass().getResource("/images/bye.png").toExternalForm());
+    private String lastQuestion = "";
+    private String userName = "";
+    private String questionToLearn = "";
+
+    private int repeatCount = 0;
+    private boolean trainingMode = false;
+    private boolean awaitingNameInput = false;
     private boolean isGoodbye = false;
 
-    Random random = new Random();
+    private static final String LEARNED_FILE = "learned_data.txt";
 
-//    public BotLogic() {
-//        loadLearnedResponses();
-//        loadQnA(); // Load Q&A from file at startup
-//    }
+    private final Image goodbyeImage = new Image(Objects.requireNonNull(getClass().getResource("/images/bye.png")).toExternalForm());
+    private final Image defaultImage = new Image(Objects.requireNonNull(getClass().getResource("/images/smile.png")).toExternalForm());
+    private final Image warningImage = new Image(Objects.requireNonNull(getClass().getResource("/images/annoyed.png")).toExternalForm());
+
+    private final ImageView chatBotImageView;
+    private final Random random = new Random();
 
     public BotLogic(ImageView chatBotImageView) {
         this.chatBotImageView = chatBotImageView;
+        initializeSmallTalk();
         loadLearnedResponses();
-        loadQnA(); // Ensure QnA is loaded
+        loadQnA();
     }
-    Map<String, String> smallTalkMap = new HashMap<>();
-    {
+
+    private void initializeSmallTalk() {
         smallTalkMap.put("greetings", "Greetings! What can I do for you?");
-        smallTalkMap.put("what'up", "Not much, just here to help you!");
-        smallTalkMap.put("Need help", "Sure! What do you need help with?");
-        smallTalkMap.put("Need advice", "Of course! What do you need advice on?");
+        smallTalkMap.put("what's up", "Not much, just here to help you!");
+        smallTalkMap.put("need help", "Sure! What do you need help with?");
+        smallTalkMap.put("need advice", "Of course! What do you need advice on?");
         smallTalkMap.put("how can you help me", "I can assist you with health-related queries, provide information, and more.");
         smallTalkMap.put("how's the weather", "I don't have real-time weather data, but I can help with health tips!");
         smallTalkMap.put("tell me a joke", "Why did the scarecrow win an award? Because he was outstanding in his field!");
-        smallTalkMap.put("tell me a story", "Once upon a time, in a land of health and wellness, there was a chatbot named Sofi who helped people stay healthy.");
-        smallTalkMap.put("what's your favorite color", "I don't have a favorite color, but I like the color of health!");
-        smallTalkMap.put("what's your favorite food", "I don't eat, but I love to talk about healthy foods!");
-        smallTalkMap.put("what's your favorite movie", "I don't watch movies, but I love health documentaries!");
-        smallTalkMap.put("what's your favorite book", "I don't read books, but I love health-related articles!");
-
+        smallTalkMap.put("tell me a story", "Once upon a time, there was a chatbot named Sofi who helped people stay healthy.");
+        smallTalkMap.put("what's your favorite color", "I like the color of health!");
+        smallTalkMap.put("what's your favorite food", "I love to talk about healthy foods!");
+        smallTalkMap.put("what's your favorite movie", "I love health documentaries!");
+        smallTalkMap.put("what's your favorite book", "I love health-related articles!");
     }
-    // Small talk responses
-    public String answerSmallTalk(String input) {
-        input = input.trim().toLowerCase();
-        String question = input.toLowerCase();
-        for (String key : smallTalkMap.keySet()) {
-            String keyLower = key.toLowerCase();
-            if (keyLower.contains(question)) {
-                return smallTalkMap.get(key);
-            }
-        }
-        return null; // return null if no small talk match
-    }
-
-
-
 
     public String getResponse(String input) {
         input = input.trim().toLowerCase();
 
-
-        // Time-based greeting
-        if (input.contains("hello") || input.contains("hi") || input.contains("hey") || input.contains("greetings")) {
+        if (input.matches(".*\\b(hello|hi|hey|greetings)\\b.*"))
             return getRandomGreeting();
-        }
 
-        if (input.contains("good morning") || input.contains("good afternoon") || input.contains("good evening")) {
+        if (input.matches(".*\\b(good morning|good afternoon|good evening)\\b.*"))
             return getTimeBasedGreeting() + " How can I help you?";
-        }
 
-        if (input.contains("sorry") || input.contains("apologize") || input.contains("excuse me")) {
+        if (input.contains("sorry") || input.contains("apologize") ) {
             repeatCount = 0;
-            Image defaultImage = new Image(getClass().getResource("/images/smile.png").toExternalForm());
             chatBotImageView.setImage(defaultImage);
             return "Okay, let's continue.";
         }
@@ -90,7 +70,6 @@ public class BotLogic {
         if (input.equals(lastQuestion)) {
             repeatCount++;
             if (repeatCount >= 4) {
-                Image warningImage = new Image(getClass().getResource("/images/annoyed.png").toExternalForm());
                 chatBotImageView.setImage(warningImage);
                 return "Why are you asking the same question again and again?";
             }
@@ -98,12 +77,13 @@ public class BotLogic {
             repeatCount = 1;
             lastQuestion = input;
         }
-        if (input.startsWith("my name is ")) {
+
+        if (input.startsWith("my name is ") || input.startsWith("i am ")) {
             userName = input.substring("my name is ".length()).trim();
             return "Nice to meet you, " + userName + "!";
         }
 
-        if (input.contains("what is your name") || input.contains("who are you") || input.contains("your name") || input.contains("name")) {
+        if (input.contains("your name") || input.contains("who are you") || input.contains("what is your name")) {
             awaitingNameInput = true;
             return "I am Sofi, your hospital assistant. What is your name?";
         }
@@ -114,72 +94,39 @@ public class BotLogic {
             return "Nice to meet you, " + userName + "!";
         }
 
-        // Small talk
-        String smallTalkResponse = answerSmallTalk(input);
-        if (smallTalkResponse != null) {
-            return smallTalkResponse;
-        }
+        String smallTalk = getSmallTalkResponse(input);
+        if (smallTalk != null) return smallTalk;
 
-        // File-based QnA
-        String qnaAnswer = getAnswer(input);
-        if (qnaAnswer != null) {
-            return qnaAnswer;
-        }
-        if (input.contains("goodnight") || input.contains("good night")){
-            return "Good night,Take care";
-        }
+        String qnaResponse = getAnswer(input);
+        if (qnaResponse != null) return qnaResponse;
 
-        if (input.equals("bye") || input.contains("see you later") || input.contains("goodbye") || input.contains("exit") ) {
+        if (input.contains("good night") || input.contains("sleep well"))
+            return "Good night, take care " + (userName.isEmpty() ? "dear" : userName) + "!";
+
+        if (input.matches(".*\\b(bye|see you|exit|goodbye)\\b.*")) {
             isGoodbye = true;
             chatBotImageView.setImage(goodbyeImage);
-            return "Have a good health, " + (userName.isEmpty() ? "dear" : userName) + "!";
+            return "Goodbye! Have a good health, " + (userName.isEmpty() ? "dear" : userName) + "!";
         }
 
-        if (input.contains("thank you") || input.contains("thanks") || input.contains("thank you so much")) {
+        if (input.contains("thank") )
             return "You're welcome! I'm here to help.";
+        if (input.contains("how old are you") || input.contains("age"))
+            return "I am a program, I don't age.";
+        if (input.contains("what can you do") || input.contains("services"))
+            return "I can provide health tips, emergency contacts, doctor schedules, and more.";
+        if (input.contains("how are you") || input.contains("how's it going") || input.contains("how's life")) {
+            return List.of("I'm fine", "I am okay", "Not bad", "Good", "Alright","doing well","great,thanks for asking" ).get(random.nextInt(7));
         }
 
-        if (input.contains("what is your age") || input.contains("how old are you") || input.contains("age")) {
-            return "I am a computer program, so I don't have an age like humans do.";
-        }
+        if (input.contains("health tip")) return getRandomLineFromFile("healthtips.txt");
+        if (input.contains("emergency")) return getLinesFromFile("emergency.txt");
+        if (input.contains("list doctors")) return getLinesFromFile("doctors.txt");
+        if (input.contains("schedule")) return getLinesFromFile("schedule.txt");
 
-        if (input.contains("what is your purpose") || input.contains("what can you do") || input.contains("what are you")) {
-            return "I am here to assist you with your health-related queries and provide information.";
-        }
+        if (learnedResponses.containsKey(input)) return learnedResponses.get(input);
 
-        if (input.contains("service") || input.contains("services") || input.contains("what services do you provide")) {
-            return "I can provide health tips, emergency contacts, doctor schedules, doctor lists, and more.";
-        }
-
-        if (input.contains("how are you") || input.contains("how are you doing") || input.contains("how's it going")) {
-            String[] replies = {"I'm fine", "I am ok", "Not bad dear", "Good", "Alright"};
-            return replies[random.nextInt(replies.length)];
-        }
-
-        if (input.contains("health tip") || input.contains("tip") || input.contains("give me a health tip")) {
-            return getRandomLineFromFile("healthtips.txt");
-        }
-
-        if (input.contains("emergency") || input.contains("contacts") || input.contains("emergency numbers")) {
-            return getLinesFromFile("emergency.txt");
-        }
-
-        if (input.contains("list doctors") || input.contains("doctors") || input.contains("doctors list")) {
-            return getLinesFromFile("doctors.txt");
-        }
-
-        if (input.contains("schedule") || input.contains("doctor's schedule") || input.contains("doctor schedule")) {
-            return getLinesFromFile("schedule.txt");
-        }
-
-        // Learned responses
-        if (learnedResponses.containsKey(input)) {
-            return learnedResponses.get(input);
-        }
-
-
-        // Training mode prompt
-        if (input.startsWith("what is") || input.startsWith("who is") || input.startsWith("tell me about") || input.startsWith("explain")) {
+        if (input.startsWith("what is") || input.startsWith("who is") || input.startsWith("tell me about") || input.endsWith("?") ) {
             trainingMode = true;
             questionToLearn = input;
             return "I don't know the answer to that. Would you like to teach me?";
@@ -188,12 +135,8 @@ public class BotLogic {
         return "Can you please rephrase your question? I don't understand.";
     }
 
-    public boolean isTrainingMode() {
-        return trainingMode;
-    }
-
     public String trainBot(String answer) {
-        if (trainingMode && questionToLearn != null && !questionToLearn.isEmpty()) {
+        if (trainingMode && !questionToLearn.isEmpty()) {
             learnedResponses.put(questionToLearn, answer);
             appendLearnedResponse(questionToLearn, answer);
             trainingMode = false;
@@ -204,66 +147,65 @@ public class BotLogic {
     }
 
     private void loadLearnedResponses() {
-        try (InputStream is = getClass().getResourceAsStream("/data/" + LEARNED_FILE);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+        loadResponsesFromFile("/data/" + LEARNED_FILE, learnedResponses);
+
+        File externalFile = new File(System.getProperty("user.home") + "/medibot/" + LEARNED_FILE);
+        if (externalFile.exists()) loadResponsesFromFile(externalFile.getAbsolutePath(), learnedResponses);
+    }
+
+    private void loadQnA() {
+        loadResponsesFromFile("/data/qna.txt", qnaMap);
+    }
+
+    private void loadResponsesFromFile(String path, Map<String, String> map) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                path.startsWith("/") ? getClass().getResourceAsStream(path) : new FileInputStream(path)))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (!line.contains("=")) continue;
-                String[] parts = line.split("=", 2);
-                if (parts.length == 2) {
-                    learnedResponses.put(parts[0].trim().toLowerCase(), parts[1].trim());
+                if (line.contains("=")) {
+                    String[] parts = line.split("=", 2);
+                    map.put(parts[0].trim().toLowerCase(), parts[1].trim());
                 }
             }
         } catch (IOException | NullPointerException e) {
-            System.out.println("No existing learned data found.");
+            System.out.println("Failed to load responses from: " + path);
         }
     }
 
     private void appendLearnedResponse(String question, String answer) {
-        try {
-            File file = new File("src/main/resources/data/" + LEARNED_FILE);
-            file.getParentFile().mkdirs();
-            try (FileWriter fw = new FileWriter(file, true);
-                 BufferedWriter bw = new BufferedWriter(fw)) {
-                bw.write(question + "=" + answer);
-                bw.newLine();
-            }
+        File dir = new File(System.getProperty("user.home") + "/medibot/");
+        dir.mkdirs();
+        File file = new File(dir, LEARNED_FILE);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.write(question + "=" + answer);
+            writer.newLine();
         } catch (IOException e) {
-            System.out.println("Failed to save learned response: " + e.getMessage());
+            System.out.println("Failed to save learned response.");
         }
+    }
+
+    private String getSmallTalkResponse(String input) {
+        return smallTalkMap.entrySet().stream()
+                .filter(entry -> input.contains(entry.getKey()))
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private String getAnswer(String input) {
+        return qnaMap.entrySet().stream()
+                .filter(entry -> input.contains(entry.getKey()))
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .orElse(null);
     }
 
     private String getTimeBasedGreeting() {
         int hour = LocalTime.now().getHour();
-        if (hour < 12) return "Good morning!";
-        else if (hour < 17) return "Good afternoon!";
-        else return "Good evening!";
+        return hour < 12 ? "Good morning!" : hour < 17 ? "Good afternoon!" : "Good evening!";
     }
 
-    private String getRandomLineFromFile(String filename) {
-        List<String> lines = readFileLines(filename);
-        if (lines.isEmpty()) return "No tips available.";
-        return lines.get(random.nextInt(lines.size()));
-    }
-
-    private String getLinesFromFile(String filename) {
-        List<String> lines = readFileLines(filename);
-        return String.join("\n", lines);
-    }
-
-    private List<String> readFileLines(String filename) {
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(
-                getClass().getResourceAsStream("/data/" + filename)))) {
-            String line;
-            while ((line = br.readLine()) != null) lines.add(line);
-        } catch (IOException | NullPointerException e) {
-            return List.of("File not found: " + filename);
-        }
-        return lines;
-    }
-
-    public String getRandomGreeting() {
+    private String getRandomGreeting() {
         String[] greetings = {
                 "Hello! How can I help you today?",
                 "Hi there! Need any assistance?",
@@ -273,10 +215,30 @@ public class BotLogic {
         return greetings[random.nextInt(greetings.length)];
     }
 
+    private String getRandomLineFromFile(String fileName) {
+        List<String> lines = readLines(fileName);
+        return lines.isEmpty() ? "No data available." : lines.get(random.nextInt(lines.size()));
+    }
+
+    private String getLinesFromFile(String fileName) {
+        return String.join("\n", readLines(fileName));
+    }
+
+    private List<String> readLines(String fileName) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream("/data/" + fileName)))) {
+            List<String> lines = new ArrayList<>();
+            String line;
+            while ((line = br.readLine()) != null) lines.add(line);
+            return lines;
+        } catch (IOException | NullPointerException e) {
+            return List.of("File not found: " + fileName);
+        }
+    }
+
     public String welcomeMessage() {
         String[] welcomeMessages = {
                 "Welcome to MediBot! How can I assist you today?",
-                "Welcome to MediBot! Your health assistant.",
                 "Hello! I'm here to help you with your health queries.",
                 "Hi there! What can I do for you today?",
                 "Greetings! How can I make your day better?",
@@ -286,29 +248,11 @@ public class BotLogic {
         return welcomeMessages[random.nextInt(welcomeMessages.length)];
     }
 
-    private void loadQnA() {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(
-                getClass().getResourceAsStream("/data/qna.txt")))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (!line.contains("=")) continue;
-                String[] parts = line.split("=", 2);
-                if (parts.length == 2) {
-                    qnaMap.put(parts[0].trim().toLowerCase(), parts[1].trim());
-                }
-            }
-        } catch (IOException | NullPointerException e) {
-            System.out.println("Could not load qna.txt");
-        }
+    public boolean isTrainingMode() {
+        return trainingMode;
     }
 
-    public String getAnswer(String input) {
-        String lowerInput = input.toLowerCase();
-        for (String key : qnaMap.keySet()) {
-            if (lowerInput.contains(key)) {
-                return qnaMap.get(key);
-            }
-        }
-        return null;
+    public boolean isGoodbye() {
+        return isGoodbye;
     }
 }
