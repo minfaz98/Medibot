@@ -252,7 +252,5 @@ public class BotLogic {
         return trainingMode;
     }
 
-    public boolean isGoodbye() {
-        return isGoodbye;
-    }
+
 }
