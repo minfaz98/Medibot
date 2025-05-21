@@ -1,20 +1,79 @@
 what is your name=I am sofiya, your hospital assistant.
+who are you=I am sofiya, your hospital assistant.
+can you tell me your name=I am sofiya, your hospital assistant.
+
 who created you=I was created by a passionate Java developer.
+who made you=I was created by a passionate Java developer.
+who developed you=I was created by a passionate Java developer.
+
 how can I book appointment=Just say "book appointment".
+how to book an appointment=Just say "book appointment".
+can I book an appointment=Just say "book appointment".
+
 how to cancel appointment=Say "cancel appointment" and I will help you.
+how can I cancel appointment=Say "cancel appointment" and I will help you.
+cancel my appointment=Say "cancel appointment" and I will help you.
+
 what services do you offer=I can help with appointments, doctor info, health tips and more.
+what can you do=I can help with appointments, doctor info, health tips and more.
+what help can I get from you=I can help with appointments, doctor info, health tips and more.
+
 do you work 24 hours=Yes, I am available anytime!
+are you available all the time=Yes, I am available anytime!
+are you 24/7=Yes, I am available anytime!
+
 how to check doctor schedule=Say "show schedule".
+show me doctor schedule=Say "show schedule".
+can I see doctor schedule=Say "show schedule".
+
 how to see doctor list=Just say "show doctors".
+show me the doctors=Just say "show doctors".
+doctor list please=Just say "show doctors".
+
 what to do in emergency=Say "emergency contact".
+I need emergency help=Say "emergency contact".
+emergency contact please=Say "emergency contact".
+
 how to get health tips=Say "health tips" and I’ll give you some!
-What is fever?=Fever is a temporary increase in your body temperature, often due to an illness.
-What is diabetes?=Diabetes is a condition that impairs the body’s ability to process blood sugar.
-What is blood pressure?=It’s the force of your blood pushing against artery walls.
-What is flu?=Flu is a contagious respiratory illness caused by influenza viruses.
-What is Covid-19?=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
-What is cancer?=Cancer is a disease in which abnormal cells divide uncontrollably and destroy body tissue.
-What is migraine?=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
-What is asthma?=Asthma is a condition in which your airways narrow and swell and may produce extra mucus.
-What is pneumonia?=Pneumonia is an infection that inflames the air sacs in one or both lungs.
-What is depression?=Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.
+give me a health tip=Say "health tips" and I’ll give you some!
+any health advice=Say "health tips" and I’ll give you some!
+
+what is fever?=Fever is a temporary increase in your body temperature, often due to an illness.
+tell me about fever=Fever is a temporary increase in your body temperature, often due to an illness.
+what causes fever=Fever is a temporary increase in your body temperature, often due to an illness.
+
+what is diabetes?=Diabetes is a condition that impairs the body’s ability to process blood sugar.
+tell me about diabetes=Diabetes is a condition that impairs the body’s ability to process blood sugar.
+how does diabetes affect us=Diabetes is a condition that impairs the body’s ability to process blood sugar.
+
+what is blood pressure?=It’s the force of your blood pushing against artery walls.
+explain blood pressure=It’s the force of your blood pushing against artery walls.
+bp meaning=It’s the force of your blood pushing against artery walls.
+
+what is flu?=Flu is a contagious respiratory illness caused by influenza viruses.
+explain flu=Flu is a contagious respiratory illness caused by influenza viruses.
+symptoms of flu=Flu is a contagious respiratory illness caused by influenza viruses.
+
+what is Covid-19?=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
+tell me about coronavirus=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
+what is corona=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
+
+what is cancer?=Cancer is a disease in which abnormal cells divide uncontrollably and destroy body tissue.
+explain cancer=Cancer is a disease in which abnormal cells divide uncontrollably and destroy body tissue.
+tell me about cancer=Cancer is a disease in which abnormal cells divide uncontrollably and destroy body tissue.
+
+what is migraine?=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
+what causes migraine=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
+explain migraine=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
+
+what is asthma?=Asthma is a condition in which your airways narrow and swell and may produce extra mucus.
+tell me about asthma=Asthma is a condition in which your airways narrow and swell and may produce extra mucus.
+what are asthma symptoms=Asthma is a condition in which your airways narrow and swell and may produce extra mucus.
+
+what is pneumonia?=Pneumonia is an infection that inflames the air sacs in one or both lungs.
+tell me about pneumonia=Pneumonia is an infection that inflames the air sacs in one or both lungs.
+symptoms of pneumonia=Pneumonia is an infection that inflames the air sacs in one or both lungs.
+
+what is depression?=Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.
+explain depression=Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.
+what are signs of depression=Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.
