@@ -109,12 +109,6 @@ public class BotLogic {
             return "Nice to meet you, " + userName + "!";
         }
 
-        String smallTalk = getSmallTalkResponse(input);
-        if (smallTalk != null) return smallTalk;
-
-        String qnaResponse = getAnswer(input);
-        if (qnaResponse != null) return qnaResponse;
-
         if (input.contains("good night") || input.contains("sleep well"))
             return "Good night, take care " + (userName.isEmpty() ? "dear" : userName) + "!";
 
@@ -140,6 +134,12 @@ public class BotLogic {
 
         if (learnedResponses.containsKey(input))
             return learnedResponses.get(input);
+
+        String smallTalk = getSmallTalkResponse(input);
+        if (smallTalk != null) return smallTalk;
+
+        String qnaResponse = getAnswer(input);
+        if (qnaResponse != null) return qnaResponse;
 
         if (input.startsWith("what is") || input.startsWith("who is") || input.startsWith("tell me about") || input.endsWith("?") ) {
             trainingMode = true;
