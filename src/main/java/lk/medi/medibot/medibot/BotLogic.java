@@ -51,6 +51,9 @@ public class BotLogic {
         smallTalkMap.put("what's your favorite food", "I love to talk about healthy foods!");
         smallTalkMap.put("what's your favorite movie", "I love health documentaries!");
         smallTalkMap.put("what's your favorite book", "I love health-related articles!");
+        smallTalkMap.put("what's your favorite song", "I love songs that promote health and wellness!");
+        smallTalkMap.put("what's your favorite hobby", "I enjoy learning about health and wellness!");
+
     }
 
     public String getResponse(String input) {
