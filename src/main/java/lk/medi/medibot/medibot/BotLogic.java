@@ -61,12 +61,12 @@ public class BotLogic {
 
         if (input.matches("(?i).*\\b(bye|see you|exit|goodbye)\\b.*")) {
             chatBotImageView.setImage(goodbyeImage);
-            return "Goodbye! Have a good health, " + (userName.isEmpty() ? " dear" : userName) + "!";
+            return "Goodbye! Have a good health, " + (userName.isEmpty() ? " Dear" : userName) + "!";
         }
 
         if (input.matches("(?i).*\\b(hello|hi|hey|greetings)\\b.*")) {
             chatBotImageView.setImage(hiImage);
-            return getRandomGreeting() + (userName.isEmpty() ? " dear" : userName) + "!";
+            return getRandomGreeting() +","+ (userName.isEmpty() ? " Dear" : userName) + "!";
         }
 
         chatBotImageView.setImage(defaultImage);
@@ -128,12 +128,17 @@ public class BotLogic {
             return List.of("I'm fine", "I am okay", "Not bad", "Good", "Alright","doing well","great,thanks for asking" ).get(random.nextInt(7));
         }
 
-        if (input.contains("health tip")) return getRandomLineFromFile("healthtips.txt");
-        if (input.contains("emergency")) return getLinesFromFile("emergency.txt");
-        if (input.contains("list doctors")) return getLinesFromFile("doctors.txt");
-        if (input.contains("schedule")) return getLinesFromFile("schedule.txt");
+        if (input.contains("health tip") || input.contains("health tips") || input.contains("health advice")|| input.contains("tips"))
+            return getRandomLineFromFile("healthtips.txt");
+        if (input.contains("emergency") || input.contains("contacts") || input.contains("numbers"))
+            return getLinesFromFile("emergency.txt");
+        if (input.contains("list doctors") || input.contains("doctors") || input.contains("doctor"))
+            return getLinesFromFile("doctors.txt");
+        if (input.contains("schedule") || input.contains("doctor schedule"))
+            return getLinesFromFile("schedule.txt");
 
-        if (learnedResponses.containsKey(input)) return learnedResponses.get(input);
+        if (learnedResponses.containsKey(input))
+            return learnedResponses.get(input);
 
         if (input.startsWith("what is") || input.startsWith("who is") || input.startsWith("tell me about") || input.endsWith("?") ) {
             trainingMode = true;

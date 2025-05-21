@@ -92,11 +92,11 @@ public class AppointmentService {
             conn.disconnect();
 
             if (status == 200 || status == 204) {
-                return "Appointment cancelled successfully.";
+                return "Appointment No:"+appointmentId+ " cancelled successfully.";
             } else if (status == 404) {
-                return "There is no appointment with this ID.";
+                return "There is no appointment with this ID. Please check and try again.";
             } else {
-                return "Sorry, I can't process this at this moment.";
+                return "Sorry, I can't process your request at this moment. Please try again later.";
             }
         } catch (NumberFormatException e) {
             return "Invalid appointment ID format.";

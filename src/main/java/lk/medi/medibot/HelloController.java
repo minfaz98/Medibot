@@ -161,11 +161,10 @@ public class HelloController implements Initializable {
                String responseMessage = appointmentService.cancelAppointment(appointmentId);
                 Platform.runLater(() -> {
                     chatArea.appendText("Sofi:"+  responseMessage + "\n");
-                    if(responseMessage.equals("Appointment cancelled successfully.")) {
-                        chatArea.appendText("Your appointment "+ appointmentId + " has been cancelled.\n");
+                    cancelIdField.clear();
+
+                    if(responseMessage.equals("Appointment No:"+appointmentId+ " cancelled successfully.")) {
                         hideCancelPane();
-                    } else {
-                        chatArea.appendText("Failed to cancel the appointment. Please check the ID.\n");
                     }
 
                 });
