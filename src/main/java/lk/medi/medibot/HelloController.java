@@ -76,7 +76,7 @@ public class HelloController implements Initializable {
         if (botLogic.isTrainingMode()) {
             response = botLogic.trainBot(input);
         } else {
-            if (input.toLowerCase().contains("book appointment")|| input.toLowerCase().contains("make appointment") || input.toLowerCase().contains("schedule appointment")) {
+            if (input.toLowerCase().contains("book appointment")|| input.toLowerCase().contains("make appointment") || input.toLowerCase().contains("book")) {
                 Platform.runLater(() -> appointmentPane.setVisible(true));
                 response = "Sure! Please fill the form below to book an appointment.";
             } else if (input.toLowerCase().contains("cancel appointment")|| input.toLowerCase().contains("delete appointment") || input.toLowerCase().contains("remove appointment")) {

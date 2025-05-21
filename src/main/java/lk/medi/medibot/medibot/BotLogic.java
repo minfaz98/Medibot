@@ -2,6 +2,7 @@ package lk.medi.medibot.medibot;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.apache.commons.text.similarity.FuzzyScore;
 
 import java.io.*;
 import java.time.LocalTime;
@@ -135,11 +136,13 @@ public class BotLogic {
         if (learnedResponses.containsKey(input))
             return learnedResponses.get(input);
 
-        String smallTalk = getSmallTalkResponse(input);
-        if (smallTalk != null) return smallTalk;
+        String smallTalk = getBestMatch(input, smallTalkMap);
+        if (smallTalk != null)
+            return smallTalk;
 
-        String qnaResponse = getAnswer(input);
-        if (qnaResponse != null) return qnaResponse;
+        String qnaResponse = getBestMatch(input, qnaMap);
+        if (qnaResponse != null)
+            return qnaResponse;
 
         if (input.startsWith("what is") || input.startsWith("who is") || input.startsWith("tell me about") || input.endsWith("?") ) {
             trainingMode = true;
@@ -199,62 +202,36 @@ public class BotLogic {
         }
     }
 
-    private String getSmallTalkResponse(String input) {
-        return smallTalkMap.entrySet().stream()
+
+    public String getBestMatch(String input, Map<String, String> responseMap) {
+        // First check if input contains any exact key from the map
+        String exactMatch = responseMap.entrySet().stream()
                 .filter(entry -> input.contains(entry.getKey()))
                 .map(Map.Entry::getValue)
                 .findFirst()
                 .orElse(null);
-    }
 
-    private String getAnswer(String input) {
-        List<String> inputWords = Arrays.asList(input.toLowerCase().split("\\W+"));
-        int threshold = 2;
-        Map<String, Integer> matchScores = new HashMap<>();
+        if (exactMatch != null) {
+            return exactMatch;
+        }
 
-        for (String inputWord : inputWords) {
-            for (String question : qnaMap.keySet()) {
-                List<String> questionWords = Arrays.asList(question.toLowerCase().split("\\W+"));
-                for (String questionWord : questionWords) {
-                    int distance = levenshteinDistance(inputWord, questionWord);
-                    if (distance <= threshold) {
-                        matchScores.put(question, matchScores.getOrDefault(question, 0) + 1);
-                    }
-                }
+        // If no exact match found, proceed with fuzzy matching
+        FuzzyScore fuzzyScore = new FuzzyScore(Locale.ENGLISH);
+        String bestMatch = null;
+        int maxScore = 0;
+
+        for (String key : responseMap.keySet()) {
+            int score = fuzzyScore.fuzzyScore(input.toLowerCase(), key.toLowerCase());
+            if (score > maxScore) {
+                maxScore = score;
+                bestMatch = key;
             }
         }
 
-        // Choose the best matching question by highest score
-        String bestMatch = matchScores.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
-
-        return bestMatch != null ? qnaMap.get(bestMatch) : null;
+        return bestMatch != null ? responseMap.get(bestMatch) : null;
     }
 
 
-    private int levenshteinDistance(String a, String b) {
-        int[][] dp = new int[a.length() + 1][b.length() + 1];
-
-        for (int i = 0; i <= a.length(); i++) {
-            for (int j = 0; j <= b.length(); j++) {
-                if (i == 0) {
-                    dp[i][j] = j;
-                } else if (j == 0) {
-                    dp[i][j] = i;
-                } else {
-                    int cost = a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1;
-                    dp[i][j] = Math.min(Math.min(
-                                    dp[i - 1][j] + 1,         // delete
-                                    dp[i][j - 1] + 1),        // insert
-                            dp[i - 1][j - 1] + cost); // replace
-                }
-            }
-        }
-
-        return dp[a.length()][b.length()];
-    }
 
 
 

@@ -2,6 +2,7 @@ module lk.medi.medibot {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.fasterxml.jackson.databind;
+    requires org.apache.commons.text;
 
 
     opens lk.medi.medibot to javafx.fxml;
