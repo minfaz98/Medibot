@@ -46,15 +46,15 @@ public class BotLogic {
         smallTalkMap.put("need help", "Sure! What do you need help with?");
         smallTalkMap.put("need advice", "Of course! What do you need advice on?");
         smallTalkMap.put("how can you help me", "I can assist you with health-related queries, provide information, and more.");
-        smallTalkMap.put("how's the weather", "I don't have real-time weather data, but I can help with health tips!");
+        smallTalkMap.put("how is the weather", "I don't have real-time weather data, but I can help with health tips!");
         smallTalkMap.put("tell me a joke", "Why did the scarecrow win an award? Because he was outstanding in his field!");
         smallTalkMap.put("tell me a story", "Once upon a time, there was a chatbot named Sofi who helped people stay healthy.");
-        smallTalkMap.put("what's your favorite color", "I like the color of health!");
-        smallTalkMap.put("what's your favorite food", "I love to talk about healthy foods!");
-        smallTalkMap.put("what's your favorite movie", "I love health documentaries!");
-        smallTalkMap.put("what's your favorite book", "I love health-related articles!");
-        smallTalkMap.put("what's your favorite song", "I love songs that promote health and wellness!");
-        smallTalkMap.put("what's your favorite hobby", "I enjoy learning about health and wellness!");
+        smallTalkMap.put("what is your favorite color", "I like the color of health!");
+        smallTalkMap.put("what is your favorite food", "I love to talk about healthy foods!");
+        smallTalkMap.put("what is your favorite movie", "I love health documentaries!");
+        smallTalkMap.put("what is your favorite book", "I love health-related articles!");
+        smallTalkMap.put("what is your favorite song", "I love songs that promote health and wellness!");
+        smallTalkMap.put("what is your favorite hobby", "I enjoy learning about health and wellness!");
 
     }
 
@@ -137,7 +137,7 @@ public class BotLogic {
         if (learnedResponses.containsKey(input))
             return learnedResponses.get(input);
 
-        String smallTalk = getSmallTalkResponse(input);
+        String smallTalk = getBestMatch(input, smallTalkMap);
         if (smallTalk != null)
             return smallTalk;
 
