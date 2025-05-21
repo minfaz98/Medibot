@@ -66,7 +66,7 @@ public class BotLogic {
             return "Goodbye! Have a good health, " + (userName.isEmpty() ? " Dear" : userName) + "!";
         }
 
-        if (input.matches("(?i).*\\b(hello|hi|hey|greetings)\\b.*")) {
+        if (input.matches("(?i).*\\b(hello|hi|hey|greetings|helo|hii)\\b.*")) {
             chatBotImageView.setImage(hiImage);
             return getRandomGreeting() +","+ (userName.isEmpty() ? " Dear" : userName) + "!";
         }
@@ -94,14 +94,14 @@ public class BotLogic {
             lastQuestion = input;
         }
 
-        if (input.startsWith("my name is ") || input.startsWith("i am ")) {
+        if (input.startsWith("my name is ") || input.startsWith("i am ") || input.startsWith("my name")) {
             userName = input.substring("my name is ".length()).trim();
             return "Nice to meet you, " + userName + "!";
         }
 
-        if (input.contains("your name") || input.contains("who are you") || input.contains("what is your name")) {
+        if (input.contains("your name") || input.contains("who are you") || input.contains("what is your name") || input.contains("introduce yourself") || input.endsWith("name")) {
             awaitingNameInput = true;
-            return "I am Sofi, your hospital assistant. What is your name?";
+            return "I am Sofi, your medical assistant. What is your name?";
         }
 
         if (awaitingNameInput) {
@@ -114,29 +114,30 @@ public class BotLogic {
             return "Good night, take care " + (userName.isEmpty() ? "dear" : userName) + "!";
 
 
-        if (input.contains("thank") )
+        if (input.contains("thank") || input.contains("thanks") || input.contains("appreciate") || input.contains("grateful") || input.contains("thank you"))
             return "You're welcome! I'm here to help.";
-        if (input.contains("how old are you") || input.contains("age"))
+        if (input.contains("how old are you") || input.endsWith("age") || input.contains("when were you born") || input.contains("your age"))
             return "I am a program, I don't age.";
-        if (input.contains("what can you do") || input.contains("services"))
-            return "I can provide health tips, emergency contacts, doctor schedules, and more.";
+        if (input.contains("what can you do") || input.contains("services") || input.endsWith("services") || input.contains("what are your services") || input.contains("what can you help with"))
+            return "I can provide health tips, emergency contacts, doctor schedules, and book appointments.";
         if (input.contains("how are you") || input.contains("how's it going") || input.contains("how's life")) {
             return List.of("I'm fine", "I am okay", "Not bad", "Good", "Alright","doing well","great,thanks for asking" ).get(random.nextInt(7));
         }
 
-        if (input.contains("health tip") || input.contains("health tips") || input.contains("health advice")|| input.contains("tips"))
+        if (input.contains("health tip") || input.contains("health") || input.contains("health advice")|| input.endsWith("tips"))
             return getRandomLineFromFile("healthtips.txt");
-        if (input.contains("emergency") || input.contains("contacts") || input.contains("numbers"))
+        if (input.contains("emergency") || input.contains("contacts") || input.endsWith("contacts") || input.endsWith("emergency contacts"))
             return getLinesFromFile("emergency.txt");
-        if (input.contains("list doctors") || input.contains("doctors") || input.contains("doctor"))
-            return getLinesFromFile("doctors.txt");
-        if (input.contains("schedule") || input.contains("doctor schedule"))
+        if (input.contains("schedule") || input.contains("doctor schedule") || input.contains("doctor's schedule") || input.endsWith("schedule"))
             return getLinesFromFile("schedule.txt");
+        if (input.contains("list doctors") || input.contains("doctors") || input.contains("doctor") || input.endsWith("doctors") || input.contains("doctor list") || input.contains("doctor's list"))
+            return getLinesFromFile("doctors.txt");
+
 
         if (learnedResponses.containsKey(input))
             return learnedResponses.get(input);
 
-        String smallTalk = getBestMatch(input, smallTalkMap);
+        String smallTalk = getSmallTalkResponse(input);
         if (smallTalk != null)
             return smallTalk;
 
@@ -202,6 +203,13 @@ public class BotLogic {
         }
     }
 
+    private String getSmallTalkResponse(String input) {
+        return smallTalkMap.entrySet().stream()
+                .filter(entry -> input.contains(entry.getKey()))
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .orElse(null);
+    }
 
     public String getBestMatch(String input, Map<String, String> responseMap) {
         // First check if input contains any exact key from the map
@@ -220,9 +228,14 @@ public class BotLogic {
         String bestMatch = null;
         int maxScore = 0;
 
+        // Define a minimum threshold for a "good enough" match
+        final int MIN_SCORE_THRESHOLD = 5; // Adjust based on testing
+
         for (String key : responseMap.keySet()) {
             int score = fuzzyScore.fuzzyScore(input.toLowerCase(), key.toLowerCase());
-            if (score > maxScore) {
+
+            // Only consider matches that meet the threshold
+            if (score > maxScore && score >= MIN_SCORE_THRESHOLD) {
                 maxScore = score;
                 bestMatch = key;
             }

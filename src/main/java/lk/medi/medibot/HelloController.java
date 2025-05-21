@@ -79,7 +79,7 @@ public class HelloController implements Initializable {
             if (input.toLowerCase().contains("book appointment")|| input.toLowerCase().contains("make appointment") || input.toLowerCase().contains("book")) {
                 Platform.runLater(() -> appointmentPane.setVisible(true));
                 response = "Sure! Please fill the form below to book an appointment.";
-            } else if (input.toLowerCase().contains("cancel appointment")|| input.toLowerCase().contains("delete appointment") || input.toLowerCase().contains("remove appointment")) {
+            } else if (input.toLowerCase().contains("cancel")|| input.toLowerCase().contains("delete appointment") || input.toLowerCase().contains("remove appointment")) {
                 Platform.runLater(() -> cancelPane.setVisible(true));
                 response = "Please enter your appointment ID to cancel.";
             } else {
