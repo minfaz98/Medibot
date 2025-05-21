@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import java.io.*;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BotLogic {
     private final Map<String, String> learnedResponses = new HashMap<>();
@@ -207,12 +208,54 @@ public class BotLogic {
     }
 
     private String getAnswer(String input) {
-        return qnaMap.entrySet().stream()
-                .filter(entry -> input.contains(entry.getKey()))
-                .map(Map.Entry::getValue)
-                .findFirst()
+        List<String> inputWords = Arrays.asList(input.toLowerCase().split("\\W+"));
+        int threshold = 2;
+        Map<String, Integer> matchScores = new HashMap<>();
+
+        for (String inputWord : inputWords) {
+            for (String question : qnaMap.keySet()) {
+                List<String> questionWords = Arrays.asList(question.toLowerCase().split("\\W+"));
+                for (String questionWord : questionWords) {
+                    int distance = levenshteinDistance(inputWord, questionWord);
+                    if (distance <= threshold) {
+                        matchScores.put(question, matchScores.getOrDefault(question, 0) + 1);
+                    }
+                }
+            }
+        }
+
+        // Choose the best matching question by highest score
+        String bestMatch = matchScores.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
                 .orElse(null);
+
+        return bestMatch != null ? qnaMap.get(bestMatch) : null;
     }
+
+
+    private int levenshteinDistance(String a, String b) {
+        int[][] dp = new int[a.length() + 1][b.length() + 1];
+
+        for (int i = 0; i <= a.length(); i++) {
+            for (int j = 0; j <= b.length(); j++) {
+                if (i == 0) {
+                    dp[i][j] = j;
+                } else if (j == 0) {
+                    dp[i][j] = i;
+                } else {
+                    int cost = a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1;
+                    dp[i][j] = Math.min(Math.min(
+                                    dp[i - 1][j] + 1,         // delete
+                                    dp[i][j - 1] + 1),        // insert
+                            dp[i - 1][j - 1] + cost); // replace
+                }
+            }
+        }
+
+        return dp[a.length()][b.length()];
+    }
+
 
     private String getTimeBasedGreeting() {
         int hour = LocalTime.now().getHour();
