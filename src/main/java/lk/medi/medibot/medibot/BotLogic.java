@@ -19,13 +19,14 @@ public class BotLogic {
     private int repeatCount = 0;
     private boolean trainingMode = false;
     private boolean awaitingNameInput = false;
-    private boolean isGoodbye = false;
+
 
     private static final String LEARNED_FILE = "learned_data.txt";
 
     private final Image goodbyeImage = new Image(Objects.requireNonNull(getClass().getResource("/images/bye.png")).toExternalForm());
     private final Image defaultImage = new Image(Objects.requireNonNull(getClass().getResource("/images/smile.png")).toExternalForm());
     private final Image warningImage = new Image(Objects.requireNonNull(getClass().getResource("/images/annoyed.png")).toExternalForm());
+    private final Image hiImage = new Image(Objects.requireNonNull(getClass().getResource("/images/hi.png")).toExternalForm());
 
     private final ImageView chatBotImageView;
     private final Random random = new Random();
@@ -55,8 +56,18 @@ public class BotLogic {
     public String getResponse(String input) {
         input = input.trim().toLowerCase();
 
-        if (input.matches(".*\\b(hello|hi|hey|greetings)\\b.*"))
-            return getRandomGreeting();
+        if (input.matches("(?i).*\\b(bye|see you|exit|goodbye)\\b.*")) {
+            chatBotImageView.setImage(goodbyeImage);
+            return "Goodbye! Have a good health, " + (userName.isEmpty() ? " dear" : userName) + "!";
+        }
+
+        if (input.matches("(?i).*\\b(hello|hi|hey|greetings)\\b.*")) {
+            chatBotImageView.setImage(hiImage);
+            return getRandomGreeting() + (userName.isEmpty() ? " dear" : userName) + "!";
+        }
+
+        chatBotImageView.setImage(defaultImage);
+
 
         if (input.matches(".*\\b(good morning|good afternoon|good evening)\\b.*"))
             return getTimeBasedGreeting() + " How can I help you?";
@@ -103,11 +114,6 @@ public class BotLogic {
         if (input.contains("good night") || input.contains("sleep well"))
             return "Good night, take care " + (userName.isEmpty() ? "dear" : userName) + "!";
 
-        if (input.matches(".*\\b(bye|see you|exit|goodbye)\\b.*")) {
-            isGoodbye = true;
-            chatBotImageView.setImage(goodbyeImage);
-            return "Goodbye! Have a good health, " + (userName.isEmpty() ? "dear" : userName) + "!";
-        }
 
         if (input.contains("thank") )
             return "You're welcome! I'm here to help.";
@@ -251,6 +257,5 @@ public class BotLogic {
     public boolean isTrainingMode() {
         return trainingMode;
     }
-
 
 }
