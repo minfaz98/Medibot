@@ -257,6 +257,7 @@ public class BotLogic {
     }
 
 
+
     private String getTimeBasedGreeting() {
         int hour = LocalTime.now().getHour();
         return hour < 12 ? "Good morning!" : hour < 17 ? "Good afternoon!" : "Good evening!";
