@@ -72,10 +72,10 @@ public class AppointmentService {
                 return node.get("id").asText();
             } else {
                 conn.disconnect();
-                return "Sorry, I couldn't book your appointment at this moment.";
+                return "Sorry, I couldn't book your appointment at this moment.please call 0112233880 to book an Appointment";
             }
         } catch (IOException e) {
-            return "Sorry, I can't process the appointment now. Please try again later.";
+            return "Sorry, I can't process the appointment now. Please try again later or call 0112233880 to book an Appointment.";
         }
     }
 
@@ -101,7 +101,7 @@ public class AppointmentService {
         } catch (NumberFormatException e) {
             return "Invalid appointment ID format.";
         } catch (IOException e) {
-            return "Sorry, I can't process this at this moment.";
+            return "Sorry, I can't process this at this moment.please call 0112233880 to cancel your Appointment ";
         }
     }
 

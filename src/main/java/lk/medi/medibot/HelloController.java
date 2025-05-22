@@ -73,9 +73,6 @@ public class HelloController implements Initializable {
         chatArea.appendText("You: " + input + "\n");
 
         String response;
-        if (botLogic.isTrainingMode()) {
-            response = botLogic.trainBot(input);
-        } else {
             if (input.toLowerCase().contains("book appointment")|| input.toLowerCase().contains("make appointment") || input.toLowerCase().contains("book")) {
                 Platform.runLater(() -> appointmentPane.setVisible(true));
                 response = "Sure! Please fill the form below to book an appointment.";
@@ -85,7 +82,7 @@ public class HelloController implements Initializable {
             } else {
                 response = botLogic.getResponse(input);
             }
-        }
+
 
         chatArea.appendText("Sofi: " + response + "\n");
         userInput.clear();

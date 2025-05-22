@@ -35,26 +35,24 @@ public class BotLogic {
 
     public BotLogic(ImageView chatBotImageView) {
         this.chatBotImageView = chatBotImageView;
-        initializeSmallTalk();
         loadLearnedResponses();
         loadQnA();
     }
 
     private void initializeSmallTalk() {
         smallTalkMap.put("greetings", "Greetings! What can I do for you?");
-        smallTalkMap.put("what's up", "Not much, just here to help you!");
-        smallTalkMap.put("need help", "Sure! What do you need help with?");
-        smallTalkMap.put("need advice", "Of course! What do you need advice on?");
-        smallTalkMap.put("how can you help me", "I can assist you with health-related queries, provide information, and more.");
-        smallTalkMap.put("how is the weather", "I don't have real-time weather data, but I can help with health tips!");
-        smallTalkMap.put("tell me a joke", "Why did the scarecrow win an award? Because he was outstanding in his field!");
-        smallTalkMap.put("tell me a story", "Once upon a time, there was a chatbot named Sofi who helped people stay healthy.");
-        smallTalkMap.put("what is your favorite color", "I like the color of health!");
-        smallTalkMap.put("what is your favorite food", "I love to talk about healthy foods!");
-        smallTalkMap.put("what is your favorite movie", "I love health documentaries!");
-        smallTalkMap.put("what is your favorite book", "I love health-related articles!");
-        smallTalkMap.put("what is your favorite song", "I love songs that promote health and wellness!");
-        smallTalkMap.put("what is your favorite hobby", "I enjoy learning about health and wellness!");
+        smallTalkMap.put("help", "Sure! What do you need help with?");
+        smallTalkMap.put("advice", "Of course! What do you need advice on?");
+        smallTalkMap.put("help me", "I can assist you with health-related queries, provide information, and more.");
+        smallTalkMap.put("weather", "I don't have real-time weather data, but I can help with health tips!");
+        smallTalkMap.put("joke", "Why did the scarecrow win an award? Because he was outstanding in his field!");
+        smallTalkMap.put("story", "Once upon a time, there was a chatbot named Sofi who helped people stay healthy.");
+        smallTalkMap.put("color", "I like the color of health!");
+        smallTalkMap.put("food", "I love to talk about healthy foods!");
+        smallTalkMap.put("movie", "I love health documentaries!");
+        smallTalkMap.put("book", "I love health-related articles!");
+        smallTalkMap.put("song", "I love songs that promote health and wellness!");
+        smallTalkMap.put("hobby", "I enjoy learning about health and wellness!");
 
     }
 
@@ -85,7 +83,7 @@ public class BotLogic {
 
         if (input.equals(lastQuestion)) {
             repeatCount++;
-            if (repeatCount >= 4) {
+            if (repeatCount >= 3) {
                 chatBotImageView.setImage(warningImage);
                 return "Why are you asking the same question again and again?";
             }
@@ -132,7 +130,7 @@ public class BotLogic {
         if (input.contains("how old are you") || input.endsWith("age") || input.contains("when were you born") || input.contains("your age"))
             return "I am a program, I don't age.";
         if (input.contains("what can you do") || input.contains("services") || input.endsWith("services") || input.contains("what are your services") || input.contains("what can you help with"))
-            return "I can provide health tips, emergency contacts, doctor schedules, and book appointments.";
+            return "I can provide health tips,Doctors Details, emergency contacts, doctor schedules, and book appointments.";
         if (input.contains("how are you") || input.contains("how's it going") || input.contains("how's life")) {
             return List.of("I'm fine", "I am okay", "Not bad", "Good", "Alright","doing well","great,thanks for asking" ).get(random.nextInt(7));
         }
@@ -141,14 +139,22 @@ public class BotLogic {
             return getRandomLineFromFile("healthtips.txt");
         if (input.contains("emergency") || input.contains("contacts") || input.endsWith("contacts") || input.endsWith("emergency contacts"))
             return getLinesFromFile("emergency.txt");
-        if (input.contains("schedule") || input.contains("doctor schedule") || input.contains("doctor's schedule") || input.endsWith("schedule"))
+        if (input.contains("schedule") || input.contains("doctor schedule") || input.contains("doctor's schedule") || input.endsWith("schedule") || input.contains("show schedule"))
             return getLinesFromFile("schedule.txt");
-        if (input.contains("list doctors") || input.contains("doctors") || input.contains("doctor") || input.endsWith("doctors") || input.contains("doctor list") || input.contains("doctor's list"))
+        if (input.contains("list doctors") || input.contains("doctors") || input.contains("doctor") || input.endsWith("doctors") || input.contains("doctor list") || input.contains("show doctors"))
             return getLinesFromFile("doctors.txt");
 
 
         if (learnedResponses.containsKey(input))
             return learnedResponses.get(input);
+
+
+        // Handle user rejection to teach the bot
+        if (trainingMode && (input.contains("no") || input.contains("not now") || input.contains("later"))) {
+            trainingMode = false;
+            questionToLearn = "";
+            return "Okay, I will learn it later.";
+        }
 
         String smallTalk = getBestMatch(input, smallTalkMap);
         if (smallTalk != null)
@@ -158,11 +164,13 @@ public class BotLogic {
         if (qnaResponse != null)
             return qnaResponse;
 
-        if (input.startsWith("what is") || input.startsWith("who is") || input.startsWith("tell me about") || input.endsWith("?") ) {
+        // Trigger training mode if input is a question and not known
+        if (input.startsWith("what is") || input.startsWith("who is") || input.startsWith("tell me about") || input.endsWith("?")) {
             trainingMode = true;
             questionToLearn = input;
-            return "I don't know the answer to that. Would you like to teach me?";
+            return "I don't know the answer to that. Would you like to teach me? If so, please type your answer directly";
         }
+
 
         return "Can you please rephrase your question? I don't understand.";
     }
@@ -231,18 +239,14 @@ public class BotLogic {
                 .map(Map.Entry::getValue)
                 .findFirst()
                 .orElse(null);
-
         if (exactMatch != null) {
-            return exactMatch;
-        }
-
+            return exactMatch;}
         // If no exact match found, proceed with fuzzy matching
         FuzzyScore fuzzyScore = new FuzzyScore(Locale.ENGLISH);
         String bestMatch = null;
         int maxScore = 0;
-
         // Define a minimum threshold for a "good enough" match
-        final int MIN_SCORE_THRESHOLD = 5; // Adjust based on testing
+        final int MIN_SCORE_THRESHOLD = 3; // Adjust based on testing
 
         for (String key : responseMap.keySet()) {
             int score = fuzzyScore.fuzzyScore(input.toLowerCase(), key.toLowerCase());
@@ -253,7 +257,6 @@ public class BotLogic {
                 bestMatch = key;
             }
         }
-
         return bestMatch != null ? responseMap.get(bestMatch) : null;
     }
 
@@ -269,9 +272,10 @@ public class BotLogic {
     private String getRandomGreeting() {
         String[] greetings = {
                 "Hello "+userName+ "! How can I help you today?",
-                "Hi there "+userName+ "! Need any assistance?",
+                "Hi "+userName+ "! Need any assistance?",
                 "Hey "+userName+"! How can I assist?",
                 "Greetings "+userName+"! What can I do for you?"
+
         };
         return greetings[random.nextInt(greetings.length)];
     }
