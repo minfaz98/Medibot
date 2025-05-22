@@ -63,19 +63,19 @@ public class BotLogic {
 
         if (input.matches("(?i).*\\b(bye|see you|exit|goodbye)\\b.*")) {
             chatBotImageView.setImage(goodbyeImage);
-            return "Goodbye! Have a good health, " + (userName.isEmpty() ? " Dear" : userName) + "!";
+            return "Goodbye! Have a good health, " + (userName.isEmpty() ? "Dear" : userName);
         }
 
         if (input.matches("(?i).*\\b(hello|hi|hey|greetings|helo|hii)\\b.*")) {
             chatBotImageView.setImage(hiImage);
-            return getRandomGreeting() +","+ (userName.isEmpty() ? " Dear" : userName) + "!";
+            return getRandomGreeting();
         }
 
         chatBotImageView.setImage(defaultImage);
 
 
         if (input.matches(".*\\b(good morning|good afternoon|good evening)\\b.*"))
-            return getTimeBasedGreeting() + " How can I help you?";
+            return getTimeBasedGreeting()+ (userName.isEmpty() ? " Dear" : userName)+ "! How can I help you?";
 
         if (input.contains("sorry") || input.contains("apologize") ) {
             repeatCount = 0;
@@ -94,19 +94,32 @@ public class BotLogic {
             lastQuestion = input;
         }
 
-        if (input.startsWith("my name is ") || input.startsWith("i am ") || input.startsWith("my name")) {
-            userName = input.substring("my name is ".length()).trim();
-            return "Nice to meet you, " + userName + "!";
+
+        // Name-related queries
+        if (input.contains("your name") || input.contains("who are you")
+                || input.contains("what is your name") || input.contains("introduce yourself") || input.endsWith("name")) {
+            if (userName.isEmpty()) {
+                awaitingNameInput = true;
+                return "I am Sofi, your medical assistant. What is your name?";
+            }
+            return "My name is Sofiya, you can call me Sofi!";
         }
 
-        if (input.contains("your name") || input.contains("who are you") || input.contains("what is your name") || input.contains("introduce yourself") || input.endsWith("name")) {
-            awaitingNameInput = true;
-            return "I am Sofi, your medical assistant. What is your name?";
-        }
+        if(input.contains("sofi"))
+            return "how can i help you "+(userName.isEmpty() ? " Dear" : userName)+ "?";
 
         if (awaitingNameInput) {
-            userName = input.trim();
-            awaitingNameInput = false;
+            if (input.matches("[a-zA-Z ]{2,}")) {
+                userName = input.trim();
+                awaitingNameInput = false;
+                return "Nice to meet you, " + userName + "!";
+            } else {
+                return "Sorry, I didn't catch your name. Could you repeat?";
+            }
+        }
+
+        if (input.startsWith("my name is ") || input.startsWith("i am ")) {
+            userName = input.replaceFirst("my name is |i am ", "").trim();
             return "Nice to meet you, " + userName + "!";
         }
 
@@ -250,15 +263,15 @@ public class BotLogic {
 
     private String getTimeBasedGreeting() {
         int hour = LocalTime.now().getHour();
-        return hour < 12 ? "Good morning!" : hour < 17 ? "Good afternoon!" : "Good evening!";
+        return hour < 12 ? "Good morning " : hour < 17 ? "Good afternoon " : "Good evening ";
     }
 
     private String getRandomGreeting() {
         String[] greetings = {
-                "Hello! How can I help you today?",
-                "Hi there! Need any assistance?",
-                "Hey! How can I assist?",
-                "Greetings! What can I do for you?"
+                "Hello "+userName+ "! How can I help you today?",
+                "Hi there "+userName+ "! Need any assistance?",
+                "Hey "+userName+"! How can I assist?",
+                "Greetings "+userName+"! What can I do for you?"
         };
         return greetings[random.nextInt(greetings.length)];
     }
