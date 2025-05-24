@@ -37,6 +37,7 @@ public class BotLogic {
         this.chatBotImageView = chatBotImageView;
         loadLearnedResponses();
         loadQnA();
+        initializeSmallTalk(); // Make sure to call this to populate smallTalkMap
     }
 
     private void initializeSmallTalk() {
@@ -50,7 +51,6 @@ public class BotLogic {
         smallTalkMap.put("color", "I like the color of health!");
         smallTalkMap.put("food", "I love to talk about healthy foods!");
         smallTalkMap.put("movie", "I love health documentaries!");
-        smallTalkMap.put("book", "I love health-related articles!");
         smallTalkMap.put("song", "I love songs that promote health and wellness!");
         smallTalkMap.put("hobby", "I enjoy learning about health and wellness!");
 
@@ -58,6 +58,18 @@ public class BotLogic {
 
     public String getResponse(String input) {
         input = input.trim().toLowerCase();
+
+        // --- Handle user input when in training mode (providing an answer) ---
+        if (trainingMode && !(input.startsWith("what is") || input.startsWith("who is") || input.startsWith("tell me about") || input.endsWith("?")) &&
+                !(input.contains("no") || input.contains("not now") || input.contains("later"))) {
+            // This means the user is likely providing an answer to a previously asked question
+            learnedResponses.put(questionToLearn, input);
+            appendLearnedResponse(questionToLearn, input);
+            trainingMode = false;
+            questionToLearn = "";
+            return "OK, I will learn that for the future.";
+        }
+        // --- End of training mode answer handling ---
 
         if (input.matches("(?i).*\\b(bye|see you|exit|goodbye)\\b.*")) {
             chatBotImageView.setImage(goodbyeImage);
@@ -83,7 +95,7 @@ public class BotLogic {
 
         if (input.equals(lastQuestion)) {
             repeatCount++;
-            if (repeatCount >= 3) {
+            if (repeatCount >= 4) {
                 chatBotImageView.setImage(warningImage);
                 return "Why are you asking the same question again and again?";
             }
@@ -149,14 +161,21 @@ public class BotLogic {
             return learnedResponses.get(input);
 
 
-        // Handle user rejection to teach the bot
+        // Handle user rejection to teach the bot (moved down to prevent premature exit)
         if (trainingMode && (input.contains("no") || input.contains("not now") || input.contains("later"))) {
             trainingMode = false;
             questionToLearn = "";
             return "Okay, I will learn it later.";
         }
 
-        String smallTalk = getBestMatch(input, smallTalkMap);
+        // Trigger training mode if input is a question and not known
+        if (input.startsWith("do you know") || input.startsWith("who is") || input.endsWith("?")) {
+            trainingMode = true;
+            questionToLearn = input;
+            return "I don't know the answer to that. Would you like to teach me? If so, please type your answer directly";
+        }
+
+        String smallTalk = getSmallTalkResponse(input);
         if (smallTalk != null)
             return smallTalk;
 
@@ -164,16 +183,10 @@ public class BotLogic {
         if (qnaResponse != null)
             return qnaResponse;
 
-        // Trigger training mode if input is a question and not known
-        if (input.startsWith("what is") || input.startsWith("who is") || input.startsWith("tell me about") || input.endsWith("?")) {
-            trainingMode = true;
-            questionToLearn = input;
-            return "I don't know the answer to that. Would you like to teach me? If so, please type your answer directly";
-        }
-
 
         return "Can you please rephrase your question? I don't understand.";
     }
+
 
     public String trainBot(String answer) {
         if (trainingMode && !questionToLearn.isEmpty()) {
@@ -234,19 +247,19 @@ public class BotLogic {
 
     public String getBestMatch(String input, Map<String, String> responseMap) {
         // First check if input contains any exact key from the map
-        String exactMatch = responseMap.entrySet().stream()
-                .filter(entry -> input.contains(entry.getKey()))
-                .map(Map.Entry::getValue)
-                .findFirst()
-                .orElse(null);
-        if (exactMatch != null) {
-            return exactMatch;}
+//        String exactMatch = responseMap.entrySet().stream()
+//                .filter(entry -> input.contains(entry.getKey()))
+//                .map(Map.Entry::getValue)
+//                .findFirst()
+//                .orElse(null);
+//        if (exactMatch != null) {
+//            return exactMatch;}
         // If no exact match found, proceed with fuzzy matching
         FuzzyScore fuzzyScore = new FuzzyScore(Locale.ENGLISH);
         String bestMatch = null;
         int maxScore = 0;
         // Define a minimum threshold for a "good enough" match
-        final int MIN_SCORE_THRESHOLD = 3; // Adjust based on testing
+        final int MIN_SCORE_THRESHOLD = 5; // Adjust based on testing
 
         for (String key : responseMap.keySet()) {
             int score = fuzzyScore.fuzzyScore(input.toLowerCase(), key.toLowerCase());

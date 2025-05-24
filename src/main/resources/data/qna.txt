@@ -1,76 +1,227 @@
-
 who created you=I was created by a passionate Java developer.
 who made you=I was created by a passionate Java developer.
 who developed you=I was created by a passionate Java developer.
+who designed you=I was created by a passionate Java developer.
+who built you=I was created by a passionate Java developer.
+who is your creator=I was created by a passionate Java developer.
 
 how can I book appointment=Just say "book appointment".
 how to make an appointment=Just say "book appointment".
 can I book an appointment=Just say "book appointment".
+how do I schedule appointment=Just say "book appointment".
+I want to book appointment=Just say "book appointment".
+I need to book appointment=Just say "book appointment".
 
 how to cancel appointment=Say "cancel appointment" and I will help you.
 how can I cancel appointment=Say "cancel appointment" and I will help you.
 cancel my appointment=Say "cancel appointment" and I will help you.
+I want to cancel appointment=Say "cancel appointment" and I will help you.
+I need to cancel appointment=Say "cancel appointment" and I will help you.
 
 services do you offer=I can help with appointments, doctor info, health tips and more.
-can you do=I can help with appointments, doctor info, health tips and more.
+what can you do=I can help with appointments, doctor info, health tips and more.
 help can I get from you=I can help with appointments, doctor info, health tips and more.
+what services do you provide=I can help with appointments, doctor info, health tips and more.
+what can you help me with=I can help with appointments, doctor info, health tips and more.
 
 do you work 24 hours=Yes, I am available anytime!
 are you available all the time=Yes, I am available anytime!
 are you 24/7=Yes, I am available anytime!
+are you always online=Yes, I am available anytime!
+can I reach you anytime=Yes, I am available anytime!
 
 how to check doctor schedule=Say "show schedule".
 show me doctor schedule=Say "show schedule".
 can I see doctor schedule=Say "show schedule".
+doctor availability=Say "show schedule".
+doctor timings=Say "show schedule".
 
 how to see doctor list=Just say "show doctors".
 show me the doctors=Just say "show doctors".
 doctor list please=Just say "show doctors".
+list of doctors=Just say "show doctors".
+available doctors=Just say "show doctors".
 
-do in emergency=Say "emergency contact".
+what to do in emergency=Say "emergency contact".
 I need emergency help=Say "emergency contact".
 emergency contact please=Say "emergency contact".
+emergency number=Say "emergency contact".
+who to call in emergency=Say "emergency contact".
 
 how to get health tips=Say "health tips" and I’ll give you some!
 give me a health tip=Say "health tips" and I’ll give you some!
 any health advice=Say "health tips" and I’ll give you some!
+share health tips=Say "health tips" and I’ll give you some!
+tell me health tips=Say "health tips" and I’ll give you some!
 
-fever?=Fever is a temporary increase in your body temperature, often due to an illness.
+what is fever=Fever is a temporary increase in your body temperature, often due to an illness.
 tell me about fever=Fever is a temporary increase in your body temperature, often due to an illness.
-causes fever=Fever is a temporary increase in your body temperature, often due to an illness.
+causes of fever=Fever is a temporary increase in your body temperature, often due to an illness.
+what causes fever=Fever is a temporary increase in your body temperature, often due to an illness.
 
-diabetes?=Diabetes is a condition that impairs the body’s ability to process blood sugar.
+what is diabetes=Diabetes is a condition that impairs the body’s ability to process blood sugar.
 tell me about diabetes=Diabetes is a condition that impairs the body’s ability to process blood sugar.
 how does diabetes affect us=Diabetes is a condition that impairs the body’s ability to process blood sugar.
+symptoms of diabetes=Diabetes is a condition that impairs the body’s ability to process blood sugar.
 
-blood pressure?=It’s the force of your blood pushing against artery walls.
+what is blood pressure=It’s the force of your blood pushing against artery walls.
 explain blood pressure=It’s the force of your blood pushing against artery walls.
 bp meaning=It’s the force of your blood pushing against artery walls.
+what is bp=It’s the force of your blood pushing against artery walls.
 
-flu?=Flu is a contagious respiratory illness caused by influenza viruses.
+what is flu=Flu is a contagious respiratory illness caused by influenza viruses.
 explain flu=Flu is a contagious respiratory illness caused by influenza viruses.
 symptoms of flu=Flu is a contagious respiratory illness caused by influenza viruses.
+what causes flu=Flu is a contagious respiratory illness caused by influenza viruses.
 
-Covid-19?=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
+what is covid-19=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
 tell me about coronavirus=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
 corona=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
+covid info=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
+covid details=Covid-19 is a viral infection caused by the SARS-CoV-2 virus.
 
-cancer?=Cancer is a disease in which abnormal cells divide uncontrollably and destroy body tissue.
+what is cancer=Cancer is a disease in which abnormal cells divide uncontrollably and destroy body tissue.
 explain cancer=Cancer is a disease in which abnormal cells divide uncontrollably and destroy body tissue.
 tell me about cancer=Cancer is a disease in which abnormal cells divide uncontrollably and destroy body tissue.
+cancer details=Cancer is a disease in which abnormal cells divide uncontrollably and destroy body tissue.
 
-migraine?=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
-causes migraine=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
+what is migraine=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
+causes of migraine=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
 explain migraine=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
+migraine symptoms=A migraine is a headache of varying intensity, often accompanied by nausea and sensitivity to light.
 
-asthma?=Asthma is a condition in which your airways narrow and swell and may produce extra mucus.
+what is asthma=Asthma is a condition in which your airways narrow and swell and may produce extra mucus.
 tell me about asthma=Asthma is a condition in which your airways narrow and swell and may produce extra mucus.
 asthma symptoms=Asthma is a condition in which your airways narrow and swell and may produce extra mucus.
+causes of asthma=Asthma is a condition in which your airways narrow and swell and may produce extra mucus.
 
-pneumonia?=Pneumonia is an infection that inflames the air sacs in one or both lungs.
+what is pneumonia=Pneumonia is an infection that inflames the air sacs in one or both lungs.
 tell me about pneumonia=Pneumonia is an infection that inflames the air sacs in one or both lungs.
 symptoms of pneumonia=Pneumonia is an infection that inflames the air sacs in one or both lungs.
+pneumonia details=Pneumonia is an infection that inflames the air sacs in one or both lungs.
 
-depression?=Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.
+what is depression=Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.
 explain depression=Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.
 signs of depression=Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.
+symptoms of depression=Depression is a mood disorder that causes a persistent feeling of sadness and loss of interest.
+
+what is ulcer=An ulcer is a sore that develops on the lining of the stomach or small intestine.
+symptoms of ulcer=Burning stomach pain, bloating, heartburn, nausea.
+treatment for ulcer=Medications to reduce stomach acid, antibiotics if caused by bacteria.
+
+what is appendicitis=Appendicitis is inflammation of the appendix.
+symptoms of appendicitis=Severe pain in lower right abdomen, fever, nausea, vomiting.
+treatment for appendicitis=Surgery to remove the appendix.
+
+what is jaundice=Jaundice is yellowing of the skin and eyes due to high bilirubin levels.
+symptoms of jaundice=Yellow skin and eyes, dark urine, fatigue.
+treatment for jaundice=Depends on cause; may need medication or liver treatment.
+
+what is chickenpox=Chickenpox is a highly contagious viral infection causing itchy rash.
+symptoms of chickenpox=Itchy red spots, fever, fatigue.
+treatment for chickenpox=Rest, fluids, antihistamines, and fever reducers.
+
+what is measles=Measles is a viral infection that’s very contagious.
+symptoms of measles=Fever, cough, runny nose, red rash.
+treatment for measles=Rest, fluids, vitamin A, and fever reducers.
+
+what is mumps=Mumps is a viral infection affecting the salivary glands.
+symptoms of mumps=Swollen cheeks/jaw, fever, headache, muscle aches.
+treatment for mumps=Rest, pain relievers, cold compresses.
+
+what is rubella=Rubella (German measles) is a contagious viral infection.
+symptoms of rubella=Red rash, fever, swollen lymph nodes.
+treatment for rubella=Rest, fluids, fever reducers.
+
+what is whooping cough=Whooping cough (pertussis) is a bacterial respiratory infection.
+symptoms of whooping cough=Severe coughing fits, “whoop” sound, vomiting after cough.
+treatment for whooping cough=Antibiotics and supportive care.
+
+what is bronchitis=Bronchitis is inflammation of the bronchial tubes.
+symptoms of bronchitis=Cough with mucus, fatigue, shortness of breath, chest discomfort.
+treatment for bronchitis=Rest, fluids, cough medicine, inhalers if needed.
+
+what is sinusitis=Sinusitis is inflammation of the sinuses.
+symptoms of sinusitis=Facial pain/pressure, nasal congestion, headache.
+treatment for sinusitis=Decongestants, nasal sprays, pain relievers.
+
+what is gastritis=Gastritis is inflammation of the stomach lining.
+symptoms of gastritis=Stomach pain, nausea, vomiting, indigestion.
+treatment for gastritis=Antacids, acid blockers, avoiding irritants.
+
+what is gallstones=Gallstones are hardened deposits in the gallbladder.
+symptoms of gallstones=Sudden right upper belly pain, nausea, vomiting.
+treatment for gallstones=Medication or surgery if needed.
+
+what is hernia=A hernia is when an internal organ pushes through a weak spot in the muscle.
+symptoms of hernia=Bulge or lump, pain when lifting, discomfort.
+treatment for hernia=Surgery to repair.
+
+what is epilepsy=Epilepsy is a neurological disorder causing seizures.
+symptoms of epilepsy=Seizures, temporary confusion, staring spells.
+treatment for epilepsy=Anti-seizure medications, sometimes surgery.
+
+what is Alzheimer’s disease=Alzheimer’s is a progressive brain disorder causing memory loss.
+symptoms of Alzheimer’s=Memory loss, confusion, difficulty with familiar tasks.
+treatment for Alzheimer’s=Medications to slow progression, support care.
+
+what is Parkinson’s disease=Parkinson’s is a brain disorder affecting movement.
+symptoms of Parkinson’s=Tremors, slow movement, stiffness, balance problems.
+treatment for Parkinson’s=Medications, therapy, sometimes surgery.
+
+what is multiple sclerosis=Multiple sclerosis (MS) is an autoimmune disease affecting the nervous system.
+symptoms of MS=Numbness, weakness, vision problems, balance issues.
+treatment for MS=Medications to slow progression, physical therapy.
+
+what is lupus=Lupus is an autoimmune disease causing inflammation.
+symptoms of lupus=Joint pain, rash, fatigue, kidney problems.
+treatment for lupus=Medications to control immune system, symptom management.
+
+what is chronic kidney disease=Chronic kidney disease (CKD) is gradual loss of kidney function.
+symptoms of CKD=Fatigue, swelling, high blood pressure, changes in urination.
+treatment for CKD=Diet changes, medications, dialysis if advanced.
+
+what is liver cirrhosis=Cirrhosis is severe liver scarring.
+symptoms of cirrhosis=Fatigue, jaundice, swelling, easy bruising.
+treatment for cirrhosis=Managing cause, medications, sometimes liver transplant.
+
+what is hypothyroidism=Hypothyroidism is underactive thyroid.
+symptoms of hypothyroidism=Fatigue, weight gain, cold sensitivity, depression.
+treatment for hypothyroidism=Thyroid hormone replacement.
+
+what is hyperthyroidism=Hyperthyroidism is overactive thyroid.
+symptoms of hyperthyroidism=Weight loss, rapid heartbeat, sweating, nervousness.
+treatment for hyperthyroidism=Medications, radioactive iodine, sometimes surgery.
+
+what is obesity=Obesity is excessive body fat.
+symptoms of obesity=High BMI, breathlessness, fatigue, joint pain.
+treatment for obesity=Diet, exercise, behavioral therapy, sometimes surgery.
+
+what is insomnia=Insomnia is difficulty falling or staying asleep.
+symptoms of insomnia=Difficulty sleeping, daytime fatigue, irritability.
+treatment for insomnia=Sleep hygiene, cognitive therapy, sometimes medication.
+
+what is GERD=GERD (acid reflux) is a digestive disorder where stomach acid flows into esophagus.
+symptoms of GERD=Heartburn, regurgitation, difficulty swallowing.
+treatment for GERD=Antacids, lifestyle changes, medications.
+
+what is pancreatitis=Pancreatitis is inflammation of the pancreas.
+symptoms of pancreatitis=Upper abdominal pain, nausea, vomiting, fever.
+treatment for pancreatitis=Hospital care, fluids, pain management.
+
+what is hemophilia=Hemophilia is a bleeding disorder where blood doesn’t clot properly.
+symptoms of hemophilia=Excessive bleeding, easy bruising, joint pain.
+treatment for hemophilia=Clotting factor replacement therapy.
+
+what is leukemia=Leukemia is a cancer of blood-forming tissues.
+symptoms of leukemia=Fatigue, frequent infections, easy bleeding, weight loss.
+treatment for leukemia=Chemotherapy, radiation, bone marrow transplant.
+
+what is lymphoma=Lymphoma is cancer of the lymphatic system.
+symptoms of lymphoma=Swollen lymph nodes, fever, night sweats, weight loss.
+treatment for lymphoma=Chemotherapy, radiation, immunotherapy.
+
+what is melanoma=Melanoma is a serious type of skin cancer.
+symptoms of melanoma=New or changing mole, irregular borders, color changes.
+treatment for melanoma=Surgery, immunotherapy, targeted drugs.
+
